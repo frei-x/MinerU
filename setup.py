@@ -28,6 +28,8 @@ if __name__ == '__main__':
         version=__version__,  # 自动从tag中获取版本号
         packages=find_packages() + ["magic_pdf.resources"],  # 包含所有的包
         package_data={
+            "magic_pdf.resources": ["**/*"],
+            "magic_pdf.resources.model_config": ["*.yaml"],
             "magic_pdf.resources": ["**"],  # 包含magic_pdf.resources目录下的所有文件
         },
         install_requires=parse_requirements('requirements.txt'),  # 项目依赖的第三方库
@@ -39,11 +41,14 @@ if __name__ == '__main__':
             "full": ["unimernet==0.2.3",  # unimernet升级0.2.3,移除torchtext/eva-decord的依赖
                      "torch>=2.2.2,<=2.3.1",  # torch2.4.0及之后版本未测试，先卡住版本上限
                      "torchvision>=0.17.2,<=0.18.1",  # torchvision 受torch版本约束
-                     "matplotlib<=3.9.0;platform_system=='Windows'",  # 3.9.1及之后不提供windows的预编译包，避免一些没有编译环境的windows设备安装失败
-                     "matplotlib;platform_system=='Linux' or platform_system=='Darwin'",  # linux 和 macos 不应限制matplotlib的最高版本，以避免无法更新导致的一些bug
+                     # 3.9.1及之后不提供windows的预编译包，避免一些没有编译环境的windows设备安装失败
+                     "matplotlib<=3.9.0;platform_system=='Windows'",
+                     # linux 和 macos 不应限制matplotlib的最高版本，以避免无法更新导致的一些bug
+                     "matplotlib;platform_system=='Linux' or platform_system=='Darwin'",
                      "ultralytics>=8.3.48",  # yolov8,公式检测
                      "paddleocr==2.7.3",  # 2.8.0及2.8.1版本与detectron2有冲突，需锁定2.7.3
-                     "paddlepaddle==3.0.0rc1;platform_system=='Linux' or platform_system=='Darwin'",  # 解决linux的段异常问题
+                     # 解决linux的段异常问题
+                     "paddlepaddle==3.0.0rc1;platform_system=='Linux' or platform_system=='Darwin'",
                      "paddlepaddle==2.6.1;platform_system=='Windows'",  # windows版本3.0.0效率下降，需锁定2.6.1
                      "struct-eqtable==0.3.2",  # 表格解析
                      "einops",  # struct-eqtable依赖
@@ -56,8 +61,8 @@ if __name__ == '__main__':
                      "openai",  # openai SDK
                      "detectron2"
                      ],
-            "old_linux":[
-                "albumentations<=1.4.20", # 1.4.21引入的simsimd不支持2019年及更早的linux系统
+            "old_linux": [
+                "albumentations<=1.4.20",  # 1.4.21引入的simsimd不支持2019年及更早的linux系统
             ]
         },
         description="A practical tool for converting PDF to Markdown",  # 简短描述
@@ -68,7 +73,7 @@ if __name__ == '__main__':
         entry_points={
             "console_scripts": [
                 "magic-pdf = magic_pdf.tools.cli:cli",
-                "magic-pdf-dev = magic_pdf.tools.cli_dev:cli" 
+                "magic-pdf-dev = magic_pdf.tools.cli_dev:cli"
             ],
         },  # 项目提供的可执行命令
         include_package_data=True,  # 是否包含非代码文件，如数据文件、配置文件等
