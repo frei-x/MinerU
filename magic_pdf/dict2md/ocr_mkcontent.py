@@ -9,6 +9,7 @@ from magic_pdf.libs.commons import join_path
 from magic_pdf.libs.language import detect_lang
 from magic_pdf.libs.markdown_utils import ocr_escape_special_markdown_char
 from magic_pdf.post_proc.para_split_v3 import ListLineTag
+from collections import defaultdict
 
 
 def __is_hyphen_at_line_end(line):
@@ -276,6 +277,7 @@ def union_make(pdf_info_dict: list,
                img_buket_path: str = '',
                ):
     output_content = []
+    grouped_data = defaultdict(list)
     for page_info in pdf_info_dict:
         drop_reason_flag = False
         drop_reason = None
@@ -296,7 +298,7 @@ def union_make(pdf_info_dict: list,
                 raise Exception('drop_mode can not be null')
 
         paras_of_layout = page_info.get('para_blocks')
-        page_idx = page_info.get('page_idx')
+        page_idx = page_info.get('page_idx') + 1
         if not paras_of_layout:
             continue
         if make_mode == MakeMode.MM_MD:
@@ -316,15 +318,23 @@ def union_make(pdf_info_dict: list,
                     para_content = para_to_standard_format_v2(
                         para_block, img_buket_path, page_idx)
                 output_content.append(para_content)
-
+        # 合并页码相同的内容,最终整理为 [{"content": "内容", "index": 1}, {"content": "内容", "index": 2}]
         if isinstance(page_markdown, str):
             page_markdown = [page_markdown]
+        page_list_data = []
         for content in page_markdown:
-            output_content.append({
+            page_list_data.append({
                 "content": content,
                 "index": page_idx
             })
-    return json.dumps(output_content, ensure_ascii=False, indent=2)
+
+        for item in page_list_data:
+            if isinstance(item, dict) and "content" in item and "index" in item:
+                grouped_data[item["index"]].append(item["content"])
+
+        output_dict = [{"content": "\n\n".join(
+            contents), "index": idx} for idx, contents in grouped_data.items()]
+    return json.dumps(output_dict, ensure_ascii=False, indent=2)
     # if make_mode in [MakeMode.MM_MD, MakeMode.NLP_MD]:
     #     return '\n\n'.join(output_content)
     # elif make_mode == MakeMode.STANDARD_FORMAT:
