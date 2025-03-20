@@ -17,16 +17,5 @@ if __name__ == "__main__":
         local_dir="/opt/",
     )
 
-    layoutreader_pattern = [
-        "*.json",
-        "*.safetensors",
-    ]
-    layoutreader_model_dir = snapshot_download(
-        "hantian/layoutreader",
-        allow_patterns=layoutreader_pattern,
-        local_dir="/opt/layoutreader/",
-    )
-
     model_dir = model_dir + "/models"
     print(f"model_dir is: {model_dir}")
-    print(f"layoutreader_model_dir is: {layoutreader_model_dir}")

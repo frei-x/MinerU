@@ -25,7 +25,6 @@ magic-pdf.json
             "bucket-name-2":["ak", "sk", "endpoint"]
         },
         "models-dir":"/tmp/models",
-        "layoutreader-model-dir":"/tmp/layoutreader",
         "device-mode":"cpu",
         "layout-config": {
             "model": "layoutlmv3"
@@ -66,7 +65,6 @@ models-dir
 Store the models download from **huggingface** or **modelshop**. You do not need to modify this field if you download the model using the scripts shipped with **MinerU**
 
 
-layoutreader-model-dir
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Store the models download from **huggingface** or **modelshop**. You do not need to modify this field if you download the model using the scripts shipped with **MinerU**

@@ -83,7 +83,6 @@
 - 2024/11/15 0.9.3发布，为表格识别功能接入了[RapidTable](https://github.com/RapidAI/RapidTable),单表解析速度提升10倍以上，准确率更高，显存占用更低
 - 2024/11/06 0.9.2发布，为表格识别功能接入了[StructTable-InternVL2-1B](https://huggingface.co/U4R/StructTable-InternVL2-1B)模型
 - 2024/10/31 0.9.0发布，这是我们进行了大量代码重构的全新版本，解决了众多问题，提升了性能，降低了硬件需求，并提供了更丰富的易用性：
-  - 重构排序模块代码，使用 [layoutreader](https://github.com/ppaanngggg/layoutreader) 进行阅读顺序排序，确保在各种排版下都能实现极高准确率
   - 重构段落拼接模块，在跨栏、跨页、跨图、跨表情况下均能实现良好的段落拼接效果
   - 重构列表和目录识别功能，极大提升列表块和目录块识别的准确率及对应文本段落的解析效果
   - 重构图、表与描述性文本的匹配逻辑，大幅提升 caption 和 footnote 与图表的匹配准确率，并将描述性文本的丢失率降至接近0
@@ -423,7 +422,6 @@ TODO
 - [RapidTable](https://github.com/RapidAI/RapidTable)
 - [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
 - [PyMuPDF](https://github.com/pymupdf/PyMuPDF)
-- [layoutreader](https://github.com/ppaanngggg/layoutreader)
 - [fast-langdetect](https://github.com/LlmKira/fast-langdetect)
 - [pdfminer.six](https://github.com/pdfminer/pdfminer.six)
 
